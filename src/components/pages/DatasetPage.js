@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Segment, Label, Grid, Sticky } from "semantic-ui-react";
 import DatasetForm from "../forms/DatasetForm";
@@ -8,12 +9,18 @@ import DatasetTool from "../tools/DatasetTool";
 
 class DatasetPage extends React.Component {
   state = {
-    setData: [],
-    param: {}
+    data: { rows: [], sumPage: 0 },
+    param: {
+      studyTpId: "",
+      limit: 10,
+      offset: 0,
+      keyword: "",
+      keyword_need_encode: ""
+    }
   };
   setParam = param => this.setState({ param });
-  submit = data =>
-    this.props.search(data).then(res => this.setState({ setData: res.rows }));
+  submit = param =>
+    this.props.search(param).then(res => this.setState({ data: res }));
   handleContextRef = contextRef => this.setState({ contextRef });
   render() {
     const { contextRef, param } = this.state;
@@ -39,7 +46,7 @@ class DatasetPage extends React.Component {
           <Grid.Column width={13}>
             <div ref={this.handleContextRef}>
               <DatasetTable
-                setData={this.state.setData}
+                data={this.state.data}
                 submit={this.submit}
                 param={param}
               />
@@ -50,5 +57,8 @@ class DatasetPage extends React.Component {
     );
   }
 }
+DatasetPage.propTypes = {
+  search: PropTypes.func.isRequired
+};
 
 export default connect(null, { search })(DatasetPage);

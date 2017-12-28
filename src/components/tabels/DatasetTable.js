@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Table, Dimmer, Loader } from "semantic-ui-react";
 import SetRows from "../rows/SetRows";
 import Paginator from "../tools/Paginator";
@@ -16,6 +17,7 @@ class DatasetTable extends React.Component {
 
   render() {
     const { active, activeRow } = this.state;
+    const { data, param } = this.props;
     return (
       <Dimmer.Dimmable>
         <Dimmer active={active} inverted onClickOutside={this.handleHide}>
@@ -34,7 +36,7 @@ class DatasetTable extends React.Component {
           </Table.Header>
           <Table.Body>
             <SetRows
-              setData={this.props.setData}
+              setData={data.rows}
               activeRow={activeRow}
               handleRowClick={this.handleRowClick}
             />
@@ -44,7 +46,9 @@ class DatasetTable extends React.Component {
               <Table.HeaderCell colSpan="7">
                 <Paginator
                   onPageSubmit={this.search}
-                  param={this.props.param}
+                  param={param}
+                  total={data.total}
+                  sumPage={data.sumPage}
                 />
               </Table.HeaderCell>
             </Table.Row>
@@ -54,5 +58,19 @@ class DatasetTable extends React.Component {
     );
   }
 }
+
+DatasetTable.propTypes = {
+  submit: PropTypes.func.isRequired,
+  data: PropTypes.shape({
+    sumPage: PropTypes.number.isRequired,
+    rows: PropTypes.array.isRequired
+  }).isRequired,
+  param: PropTypes.shape({
+    studyTpId: PropTypes.string.isRequired,
+    keyword_need_encode: PropTypes.string.isRequired,
+    limit: PropTypes.number.isRequired,
+    offset: PropTypes.number.isRequired
+  }).isRequired
+};
 
 export default DatasetTable;

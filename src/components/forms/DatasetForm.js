@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Form } from "semantic-ui-react";
 
 const options = [
@@ -74,5 +75,10 @@ class DatasetForm extends React.Component {
     );
   }
 }
+
+DatasetForm.propTypes = {
+  setParam: PropTypes.func.isRequired,
+  submit: PropTypes.func.isRequired
+};
 
 export default DatasetForm;
