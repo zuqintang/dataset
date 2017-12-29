@@ -2,10 +2,10 @@ import React from "react";
 import { List, Table, Label } from "semantic-ui-react";
 import DatasetPanel from "../panels/DatasetPanel";
 
-function SetRows(props) {
-  const rows = props.setData;
+function GroupRows(props) {
+  const rows = props.data;
   const activeRow = props.activeRow;
-  const SetRowsList = rows.map(row => (
+  const GroupRows = rows.map(row => (
     <Table.Row key={row.ID}>
       {activeRow !== row.DS_CODE && (
         <Table.Cell singleLine>
@@ -67,7 +67,7 @@ function SetRows(props) {
       )}
     </Table.Row>
   ));
-  return SetRowsList;
+  return GroupRows;
 }
 
-export default SetRows;
+export default GroupRows;

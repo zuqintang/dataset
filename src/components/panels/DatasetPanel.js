@@ -1,13 +1,36 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Menu, Input, Segment } from "semantic-ui-react";
 import DatagroupTable from "../tabels/DatagroupTable";
 import ElementTable from "../tabels/ElementTable";
+import { searchElements, searchDatagroups } from "../../actions/dataset";
+import DatagroupForm from "../forms/DatagroupForm";
 
 class DatasetPanel extends React.Component {
-  state = { activeItem: "数据组", groupData: {} };
+  state = {
+    param: {
+      limit: 10,
+      offset: 0,
+      keyword: "",
+      keyword_need_encode: "",
+      datasetID: this.props.datasetID || 0
+    },
+    activeItem: "数据组",
+    datagroupData: { sumPage: 0, rows: [] },
+    elementData: { sumPage: 0, rows: [] }
+  };
+  setParam = param => this.setState({ param });
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+  searchDatagroups = param =>
+    this.props
+      .searchDatagroups(param)
+      .then(res => this.setState({ datagroupData: res }));
+  searchElements = param =>
+    this.props
+      .searchElements(param)
+      .then(res => this.setState({ elementData: res }));
   render() {
-    const { activeItem, groupData } = this.state;
+    const { activeItem, datagroupData, elementData, param } = this.state;
     return (
       <div>
         <style>{`
@@ -26,23 +49,33 @@ class DatasetPanel extends React.Component {
             active={activeItem === "数据元"}
             onClick={this.handleItemClick}
           />
-          <Menu.Menu position="right">
-            <Menu.Item>
-              <Input
-                transparent
-                icon={{ name: "search", link: true }}
-                placeholder="搜索..."
-              />
-            </Menu.Item>
-          </Menu.Menu>
+          <DatagroupForm
+            submit={this.searchDatagroups}
+            setParam={this.setParam}
+            param={param}
+          />
         </Menu>
         <Segment attached="bottom">
-          {activeItem === "数据组" && <DatagroupTable groupData={groupData} />}
-          {activeItem === "数据元" && <ElementTable />}
+          {activeItem === "数据组" && (
+            <DatagroupTable
+              submit={this.searchDatagroups}
+              param={param}
+              data={datagroupData}
+            />
+          )}
+          {activeItem === "数据元" && (
+            <ElementTable
+              submit={this.searchElements}
+              param={param}
+              data={datagroupData}
+            />
+          )}
         </Segment>
       </div>
     );
   }
 }
 
-export default DatasetPanel;
+export default connect(null, { searchElements, searchDatagroups })(
+  DatasetPanel
+);

@@ -1,10 +1,15 @@
 import React from "react";
-import { Table, Menu, Icon, Dimmer, Loader } from "semantic-ui-react";
-import DatagroupPanel from "../panels/DatagroupPanel";
+import PropTypes from "prop-types";
+import { Table, Dimmer, Loader } from "semantic-ui-react";
+import Paginator from "../tools/Paginator";
+import GroupRows from "../rows/GroupRows";
 
-class DataGroup extends React.Component {
-  state = { activeRow: 0 };
-
+class DatagroupTable extends React.Component {
+  state = { activeRow: 0, data: { rows: [] }, active: false };
+  search = searchParam => {
+    this.setState({ active: true });
+    this.props.submit(searchParam).then(() => this.setState({ active: false }));
+  };
   handleRowClick = e => {
     if (this.state.activeRow === e.target.attributes[0].value)
       this.setState({ activeRow: 0 });
@@ -12,6 +17,7 @@ class DataGroup extends React.Component {
   };
   render() {
     const { active, activeRow } = this.state;
+    const { data, param } = this.props;
     return (
       <Dimmer.Dimmable>
         <Dimmer active={active} inverted onClickOutside={this.handleHide}>
@@ -30,74 +36,20 @@ class DataGroup extends React.Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            <Table.Row textAlign="center">
-              <Table.Cell>
-                通用-一般治疗处置记录-麻醉术后访视记录子集
-              </Table.Cell>
-              <Table.Cell name="HDSD00.06.05" onClick={this.handleRowClick}>
-                HDSD00.06.05
-              </Table.Cell>
-              <Table.Cell>企标</Table.Cell>
-              <Table.Cell>专用-病种名称</Table.Cell>
-              <Table.Cell>2014-11-20 15:04:05</Table.Cell>
-              <Table.Cell>李晓云</Table.Cell>
-              <Table.Cell>
-                <Menu size="mini">
-                  <Menu.Item as="a">详情 </Menu.Item>
-                  <Menu.Item as="a">关联</Menu.Item>
-                  <Menu.Item as="a">添加</Menu.Item>
-                </Menu>
-              </Table.Cell>
-            </Table.Row>
-            {activeRow === "HDSD00.06.05" && (
-              <Table.Row>
-                <Table.Cell colSpan="8">
-                  <DatagroupPanel />
-                </Table.Cell>
-              </Table.Row>
-            )}
-            <Table.Row textAlign="center">
-              <Table.Cell>
-                通用-一般治疗处置记录-麻醉术后访视记录子集
-              </Table.Cell>
-              <Table.Cell name="HDSD00.06.06" onClick={this.handleRowClick}>
-                HDSD00.06.06
-              </Table.Cell>
-              <Table.Cell>企标</Table.Cell>
-              <Table.Cell>专用-病种名称</Table.Cell>
-              <Table.Cell>2014-11-20 15:04:05</Table.Cell>
-              <Table.Cell>李晓云</Table.Cell>
-              <Table.Cell>
-                <Menu size="mini">
-                  <Menu.Item as="a">详情 </Menu.Item>
-                  <Menu.Item as="a">关联</Menu.Item>
-                  <Menu.Item as="a">添加</Menu.Item>
-                </Menu>
-              </Table.Cell>
-            </Table.Row>
-            {activeRow === "HDSD00.06.06" && (
-              <Table.Row>
-                <Table.Cell colSpan="8">
-                  <DatagroupPanel />
-                </Table.Cell>
-              </Table.Row>
-            )}
+            <GroupRows
+              data={data.rows}
+              activeRow={activeRow}
+              handleRowClick={this.handleRowClick}
+            />
           </Table.Body>
           <Table.Footer>
             <Table.Row>
               <Table.HeaderCell colSpan="7">
-                <Menu floated="right" pagination>
-                  <Menu.Item as="a" icon>
-                    <Icon name="left chevron" />
-                  </Menu.Item>
-                  <Menu.Item as="a">1</Menu.Item>
-                  <Menu.Item as="a">2</Menu.Item>
-                  <Menu.Item as="a">3</Menu.Item>
-                  <Menu.Item as="a">4</Menu.Item>
-                  <Menu.Item as="a" icon>
-                    <Icon name="right chevron" />
-                  </Menu.Item>
-                </Menu>
+                <Paginator
+                  onPageSubmit={this.search}
+                  param={param}
+                  sumPage={data.sumPage}
+                />
               </Table.HeaderCell>
             </Table.Row>
           </Table.Footer>
@@ -107,4 +59,18 @@ class DataGroup extends React.Component {
   }
 }
 
-export default DataGroup;
+DatagroupTable.propTypes = {
+  submit: PropTypes.func.isRequired,
+  data: PropTypes.shape({
+    sumPage: PropTypes.number.isRequired,
+    rows: PropTypes.array.isRequired
+  }).isRequired,
+  param: PropTypes.shape({
+    datasetID: PropTypes.number.isRequired,
+    keyword: PropTypes.string.isRequired,
+    limit: PropTypes.number.isRequired,
+    offset: PropTypes.number.isRequired
+  }).isRequired
+};
+
+export default DatagroupTable;

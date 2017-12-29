@@ -26,31 +26,31 @@ class DatasetPage extends React.Component {
     const { contextRef, param } = this.state;
     return (
       <Grid>
-        <Grid.Row columns={2}>
-          <Grid.Column width={3}>
-            <Sticky context={contextRef}>
-              <Segment raised>
-                <Label as="a" color="teal" ribbon>
-                  筛选条件
-                </Label>
-                <DatasetForm submit={this.submit} setParam={this.setParam} />
-              </Segment>
-              <Segment raised>
-                <Label as="a" color="teal" ribbon>
-                  操作面板
-                </Label>
-                <DatasetTool />
-              </Segment>
-            </Sticky>
+        <Grid.Row>
+          <Grid.Column width={12}>
+            <Segment raised>
+              <Label as="a" color="teal" ribbon>
+                筛选条件
+              </Label>
+              <DatasetForm submit={this.submit} setParam={this.setParam} />
+            </Segment>
           </Grid.Column>
-          <Grid.Column width={13}>
-            <div ref={this.handleContextRef}>
-              <DatasetTable
-                data={this.state.data}
-                submit={this.submit}
-                param={param}
-              />
-            </div>
+          <Grid.Column width={4}>
+            <Segment raised>
+              <Label as="a" color="teal" ribbon>
+                操作面板
+              </Label>
+              <DatasetTool />
+            </Segment>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
+            <DatasetTable
+              data={this.state.data}
+              submit={this.submit}
+              param={param}
+            />
           </Grid.Column>
         </Grid.Row>
       </Grid>

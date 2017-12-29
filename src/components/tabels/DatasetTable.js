@@ -47,7 +47,6 @@ class DatasetTable extends React.Component {
                 <Paginator
                   onPageSubmit={this.search}
                   param={param}
-                  total={data.total}
                   sumPage={data.sumPage}
                 />
               </Table.HeaderCell>
