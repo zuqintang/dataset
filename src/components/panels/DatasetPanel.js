@@ -7,6 +7,7 @@ import ElementTable from "../tabels/ElementTable";
 import { searchSetChildren } from "../../actions/dataset";
 import DatagroupForm from "../forms/DatagroupForm";
 import { DATA_GROUP_TYPE, DATA_ELEMENT_TYPE } from "../../types";
+import DatasetTool from "../tools/DatasetTool";
 
 class DatasetPanel extends React.Component {
   state = {
@@ -36,6 +37,11 @@ class DatasetPanel extends React.Component {
         data: { ...this.state.data, [res.activeItem]: res.data }
       })
     );
+
+  add = () => {};
+  delete = () => {};
+  upload = () => {};
+  download = () => {};
   render() {
     const { data, param } = this.state;
     return (
@@ -45,7 +51,7 @@ class DatasetPanel extends React.Component {
             margin:0;
           }
         `}</style>
-        <Menu tabular>
+        <Menu secondary>
           <Menu.Item
             name="数据组"
             id={DATA_GROUP_TYPE}
@@ -57,6 +63,12 @@ class DatasetPanel extends React.Component {
             id={DATA_ELEMENT_TYPE}
             active={param.activeItem === DATA_ELEMENT_TYPE}
             onClick={this.handleItemClick}
+          />
+          <DatasetTool
+            add={this.add}
+            delete={this.delete}
+            upload={this.upload}
+            download={this.download}
           />
           <DatagroupForm
             submit={this.searchSetChildren}
@@ -76,7 +88,7 @@ class DatasetPanel extends React.Component {
             <ElementTable
               submit={this.searchSetChildren}
               getParam={this.getParam}
-              data={data.datagroupData}
+              data={data.elementData}
             />
           )}
         </Segment>
@@ -87,7 +99,7 @@ class DatasetPanel extends React.Component {
 
 DatasetPanel.propTypes = {
   searchSetChildren: PropTypes.func.isRequired,
-  datasetID: PropTypes.string.isRequired
+  datasetID: PropTypes.number.isRequired
 };
 
 export default connect(null, { searchSetChildren })(DatasetPanel);

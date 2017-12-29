@@ -11,8 +11,9 @@ class DatasetTable extends React.Component {
     this.props.submit(searchParam).then(() => this.setState({ active: false }));
   };
   handleRowClick = e => {
-    if (this.state.activeRow === e.target.name) this.setState({ activeRow: 0 });
-    else this.setState({ activeRow: e.target.name });
+    const activeRowID = parseInt(e.target.name, 10);
+    if (this.state.activeRow === activeRowID) this.setState({ activeRow: 0 });
+    else this.setState({ activeRow: activeRowID });
   };
 
   render() {

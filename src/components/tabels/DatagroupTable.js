@@ -11,9 +11,9 @@ class DatagroupTable extends React.Component {
     this.props.submit(searchParam).then(() => this.setState({ active: false }));
   };
   handleRowClick = e => {
-    if (this.state.activeRow === e.target.attributes[0].value)
-      this.setState({ activeRow: 0 });
-    else this.setState({ activeRow: e.target.attributes[0].value });
+    const activeRowID = parseInt(e.target.name, 10);
+    if (this.state.activeRow === activeRowID) this.setState({ activeRow: 0 });
+    else this.setState({ activeRow: activeRowID });
   };
   render() {
     const { active, activeRow } = this.state;
@@ -33,7 +33,6 @@ class DatagroupTable extends React.Component {
               <Table.HeaderCell>所属学科</Table.HeaderCell>
               <Table.HeaderCell>创建日期</Table.HeaderCell>
               <Table.HeaderCell>创建人</Table.HeaderCell>
-              <Table.HeaderCell>操作</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>

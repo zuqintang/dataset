@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Segment, Label, Grid, Sticky } from "semantic-ui-react";
+import { Segment, Label, Grid } from "semantic-ui-react";
 import DatasetForm from "../forms/DatasetForm";
 import DatasetTable from "../tabels/DatasetTable";
 import { search } from "../../actions/dataset";
@@ -22,8 +22,13 @@ class DatasetPage extends React.Component {
   submit = param =>
     this.props.search(param).then(res => this.setState({ data: res }));
   handleContextRef = contextRef => this.setState({ contextRef });
+
+  add = () => {};
+  delete = () => {};
+  upload = () => {};
+  download = () => {};
   render() {
-    const { contextRef, param } = this.state;
+    const { param } = this.state;
     return (
       <Grid>
         <Grid.Row>
@@ -40,12 +45,15 @@ class DatasetPage extends React.Component {
               <Label as="a" color="teal" ribbon>
                 操作面板
               </Label>
-              <DatasetTool />
+              <DatasetTool
+                add={this.add}
+                delete={this.delete}
+                upload={this.upload}
+                download={this.download}
+              />
             </Segment>
           </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
+          <Grid.Column width={16}>
             <DatasetTable
               data={this.state.data}
               submit={this.submit}

@@ -5,69 +5,79 @@ import DatasetPanel from "../panels/DatasetPanel";
 function GroupRows(props) {
   const rows = props.data;
   const activeRow = props.activeRow;
-  const GroupRows = rows.map(row => (
+  const groupRowsList = rows.map(row => (
     <Table.Row key={row.ID}>
-      {activeRow !== row.DS_CODE && (
-        <Table.Cell singleLine>
-          <Label as="a" name={row.DS_CODE} onClick={props.handleRowClick}>
+      {activeRow !== row.ID && (
+        <Table.Cell>
+          <Label as="a" name={row.ID} onClick={props.handleRowClick}>
             {row.DS_NAME}
           </Label>
         </Table.Cell>
       )}
-      {activeRow !== row.DS_CODE && (
+      {activeRow !== row.ID && (
         <Table.Cell>
-          <Label as="a" name={row.DS_CODE} onClick={props.handleRowClick}>
+          <Label as="a" name={row.ID} onClick={props.handleRowClick}>
             {row.DS_CODE}
           </Label>
         </Table.Cell>
       )}
-      {activeRow !== row.DS_CODE && <Table.Cell>{row.STANDARD}</Table.Cell>}
-      {activeRow !== row.DS_CODE && <Table.Cell>{row.STUDY_TYPE}</Table.Cell>}
-      {activeRow !== row.DS_CODE && <Table.Cell>{row.CREATED_AT}</Table.Cell>}
-      {activeRow !== row.DS_CODE && <Table.Cell>{row.CREATOR}</Table.Cell>}
-      {activeRow === row.DS_CODE && (
-        <Table.Cell singleLine>
+      {activeRow !== row.ID && <Table.Cell>{row.STANDARD}</Table.Cell>}
+      {activeRow !== row.ID && <Table.Cell>{row.STUDY_TYPE}</Table.Cell>}
+      {activeRow !== row.ID && <Table.Cell>{row.CREATED_AT}</Table.Cell>}
+      {activeRow !== row.ID && <Table.Cell>{row.CREATOR}</Table.Cell>}
+      {activeRow === row.ID && (
+        <Table.Cell verticalAlign="top">
           <Label
             as="a"
-            name={row.DS_CODE}
+            name={row.ID}
             onClick={props.handleRowClick}
             color="teal"
             ribbon
           >
             {row.DS_NAME}
           </Label>
-          <List>
+          <List divided selection>
             <List.Item>
-              <List.Header>编码</List.Header>
-              <Label>{row.DS_CODE}</Label>
+              <Label color="blue" horizontal>
+                编码
+              </Label>
+              {row.DS_CODE}
             </List.Item>
             <List.Item>
-              <List.Header>来源</List.Header>
-              <Label>{row.STANDARD}</Label>
+              <Label color="blue" horizontal>
+                来源
+              </Label>
+              {row.STANDARD}
             </List.Item>
             <List.Item>
-              <List.Header>所属学科</List.Header>
-              <Label>{row.STUDY_TYPE}</Label>
+              <Label color="blue" horizontal>
+                所属学科
+              </Label>
+              {row.STUDY_TYPE}
             </List.Item>
             <List.Item>
-              <List.Header>创建日期</List.Header>
-              <Label>{row.CREATED_AT}</Label>
+              <Label color="blue" horizontal>
+                创建日期
+              </Label>
+              {row.CREATED_AT}
             </List.Item>
             <List.Item>
-              <List.Header>创建人</List.Header>
-              <Label>{row.CREATOR}</Label>
+              <Label color="blue" horizontal>
+                创建人
+              </Label>
+              {row.CREATOR}
             </List.Item>
           </List>
         </Table.Cell>
       )}
-      {activeRow === row.DS_CODE && (
+      {activeRow === row.ID && (
         <Table.Cell colSpan={5}>
           <DatasetPanel datasetID={row.ID} />
         </Table.Cell>
       )}
     </Table.Row>
   ));
-  return GroupRows;
+  return groupRowsList;
 }
 
 export default GroupRows;
