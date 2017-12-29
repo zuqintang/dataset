@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Menu, Segment } from "semantic-ui-react";
 import DatagroupTable from "../tabels/DatagroupTable";
@@ -83,5 +84,10 @@ class DatasetPanel extends React.Component {
     );
   }
 }
+
+DatasetPanel.propTypes = {
+  searchSetChildren: PropTypes.func.isRequired,
+  datasetID: PropTypes.string.isRequired
+};
 
 export default connect(null, { searchSetChildren })(DatasetPanel);
