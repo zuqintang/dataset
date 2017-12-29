@@ -1,10 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Menu, Input, Segment } from "semantic-ui-react";
+import { Menu, Segment } from "semantic-ui-react";
 import DatagroupTable from "../tabels/DatagroupTable";
 import ElementTable from "../tabels/ElementTable";
-import { searchElements, searchDatagroups } from "../../actions/dataset";
+import { searchSetChildren } from "../../actions/dataset";
 import DatagroupForm from "../forms/DatagroupForm";
+import { DATA_GROUP_TYPE, DATA_ELEMENT_TYPE } from "../../types";
 
 class DatasetPanel extends React.Component {
   state = {
@@ -13,24 +14,29 @@ class DatasetPanel extends React.Component {
       offset: 0,
       keyword: "",
       keyword_need_encode: "",
-      datasetID: this.props.datasetID || 0
+      datasetID: this.props.datasetID || 0,
+      activeItem: DATA_GROUP_TYPE
     },
-    activeItem: "数据组",
-    datagroupData: { sumPage: 0, rows: [] },
-    elementData: { sumPage: 0, rows: [] }
+    data: {
+      datagroupData: { sumPage: 0, rows: [] },
+      elementData: { sumPage: 0, rows: [] }
+    }
   };
   setParam = param => this.setState({ param });
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
-  searchDatagroups = param =>
-    this.props
-      .searchDatagroups(param)
-      .then(res => this.setState({ datagroupData: res }));
-  searchElements = param =>
-    this.props
-      .searchElements(param)
-      .then(res => this.setState({ elementData: res }));
+  getParam = () => {
+    const param = this.state.param;
+    return param;
+  };
+  handleItemClick = (e, { id }) =>
+    this.setState({ param: { ...this.state.param, activeItem: id } });
+  searchSetChildren = param =>
+    this.props.searchSetChildren(param).then(res =>
+      this.setState({
+        data: { ...this.state.data, [res.activeItem]: res.data }
+      })
+    );
   render() {
-    const { activeItem, datagroupData, elementData, param } = this.state;
+    const { data, param } = this.state;
     return (
       <div>
         <style>{`
@@ -41,33 +47,35 @@ class DatasetPanel extends React.Component {
         <Menu tabular>
           <Menu.Item
             name="数据组"
-            active={activeItem === "数据组"}
+            id={DATA_GROUP_TYPE}
+            active={param.activeItem === DATA_GROUP_TYPE}
             onClick={this.handleItemClick}
           />
           <Menu.Item
             name="数据元"
-            active={activeItem === "数据元"}
+            id={DATA_ELEMENT_TYPE}
+            active={param.activeItem === DATA_ELEMENT_TYPE}
             onClick={this.handleItemClick}
           />
           <DatagroupForm
-            submit={this.searchDatagroups}
+            submit={this.searchSetChildren}
             setParam={this.setParam}
-            param={param}
+            getParam={this.getParam}
           />
         </Menu>
         <Segment attached="bottom">
-          {activeItem === "数据组" && (
+          {param.activeItem === DATA_GROUP_TYPE && (
             <DatagroupTable
-              submit={this.searchDatagroups}
-              param={param}
-              data={datagroupData}
+              submit={this.searchSetChildren}
+              getParam={this.getParam}
+              data={data.datagroupData}
             />
           )}
-          {activeItem === "数据元" && (
+          {param.activeItem === DATA_ELEMENT_TYPE && (
             <ElementTable
-              submit={this.searchElements}
-              param={param}
-              data={datagroupData}
+              submit={this.searchSetChildren}
+              getParam={this.getParam}
+              data={data.datagroupData}
             />
           )}
         </Segment>
@@ -76,6 +84,4 @@ class DatasetPanel extends React.Component {
   }
 }
 
-export default connect(null, { searchElements, searchDatagroups })(
-  DatasetPanel
-);
+export default connect(null, { searchSetChildren })(DatasetPanel);

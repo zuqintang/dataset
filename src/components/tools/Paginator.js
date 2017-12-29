@@ -9,7 +9,7 @@ class Paginator extends React.Component {
       current: parseInt(e.target.text, 10),
       activeItem: parseInt(e.target.text, 10)
     });
-    const param = this.props.param;
+    const { param } = this.props;
     const offset = (e.target.text - 1) * param.limit;
     const data = { ...this.props.param, offset };
     this.props.onPageSubmit(data);

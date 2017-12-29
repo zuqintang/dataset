@@ -19,27 +19,16 @@ export default {
           })
         )
         .then(res => res.data),
-    searchDatagroups: ({ limit, keyword, offset, datasetID }) =>
+    searchSetChildren: ({ limit, keyword, offset, datasetID, activeItem }) =>
       axios
         .post(
-          "/Dataset/searchDatagroups",
+          "/Dataset/searchSetChildren",
           qs.stringify({
             limit,
             keyword,
             offset,
-            datasetID
-          })
-        )
-        .then(res => res.data),
-    searchElements: ({ limit, keyword, offset, datasetID }) =>
-      axios
-        .post(
-          "/Dataset/searchElements",
-          qs.stringify({
-            limit,
-            keyword,
-            offset,
-            datasetID
+            datasetID,
+            activeItem
           })
         )
         .then(res => res.data)

@@ -17,7 +17,8 @@ class DatagroupTable extends React.Component {
   };
   render() {
     const { active, activeRow } = this.state;
-    const { data, param } = this.props;
+    const { data } = this.props;
+    const param = this.props.getParam();
     return (
       <Dimmer.Dimmable>
         <Dimmer active={active} inverted onClickOutside={this.handleHide}>
@@ -65,12 +66,7 @@ DatagroupTable.propTypes = {
     sumPage: PropTypes.number.isRequired,
     rows: PropTypes.array.isRequired
   }).isRequired,
-  param: PropTypes.shape({
-    datasetID: PropTypes.number.isRequired,
-    keyword: PropTypes.string.isRequired,
-    limit: PropTypes.number.isRequired,
-    offset: PropTypes.number.isRequired
-  }).isRequired
+  getParam: PropTypes.func.isRequired
 };
 
 export default DatagroupTable;

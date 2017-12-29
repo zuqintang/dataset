@@ -2,49 +2,37 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Menu, Input } from "semantic-ui-react";
 
-const options = [
-  { key: 0, text: "请选择", value: "0" },
-  { key: 1, text: "国标", value: "1" },
-  { key: 2, text: "企标", value: "2" },
-  { key: 3, text: "专用-病种名称", value: "3" },
-  { key: 4, text: "通用-人口信息学", value: "4" }
-];
-
 class DatagroupForm extends React.Component {
   state = {
-    data: this.props.param,
+    keyword: "",
     loading: false
   };
   onSubmit = () => {
     this.setState({ loading: true });
-    const searchParam = this.keywordEncode(this.state.data);
+    const searchParam = this.keywordEncode(this.props.getParam());
     this.props.setParam(searchParam);
-    this.props
-      .submit(searchParam)
-      .then(() => this.setState({ loading: false }));
+    this.props.submit(searchParam).then(() => {
+      this.setState({ loading: false });
+    });
   };
 
-  keywordEncode = data => {
-    const searchParam = data;
-    searchParam.keyword = encodeURIComponent(data.keyword_need_encode);
+  onChange = e => this.setState({ [e.target.name]: e.target.value });
+
+  keywordEncode = param => {
+    const searchParam = param;
+    searchParam.keyword = encodeURIComponent(this.state.keyword);
     return searchParam;
   };
 
-  handleChange = (e, { value }) =>
-    this.setState({ data: { ...this.state.data, studyTpId: value } });
-  handleInputChange = e =>
-    this.setState({
-      data: { ...this.state.data, [e.target.name]: e.target.value }
-    });
   render() {
-    const { data, loading } = this.state;
+    const { keyword, loading } = this.state;
     return (
       <Menu.Menu position="right">
         <Menu.Item>
           <Input
-            name="keyword_need_encode"
-            value={data.keyword_need_encode}
-            onChange={this.handleInputChange}
+            name="keyword"
+            value={keyword}
+            onChange={this.onChange}
             transparent
             loading={loading}
             icon={{ name: "search", link: true, onClick: this.onSubmit }}
@@ -58,6 +46,7 @@ class DatagroupForm extends React.Component {
 
 DatagroupForm.propTypes = {
   setParam: PropTypes.func.isRequired,
+  getParam: PropTypes.func.isRequired,
   submit: PropTypes.func.isRequired
 };
 
