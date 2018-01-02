@@ -9,6 +9,7 @@ const DatasetTool = props => (
       <Button basic circular icon="trash outline" onClick={props.delete} />
       <Button basic circular icon="upload" onClick={props.upload} />
       <Button basic circular icon="download" onClick={props.download} />
+      <Button basic circular icon="compress" onClick={props.select} />
     </Menu.Item>
   </Menu.Menu>
 );
@@ -17,7 +18,8 @@ DatasetTool.propTypes = {
   add: PropTypes.func.isRequired,
   delete: PropTypes.func.isRequired,
   upload: PropTypes.func.isRequired,
-  download: PropTypes.func.isRequired
+  download: PropTypes.func.isRequired,
+  select: PropTypes.func.isRequired
 };
 
 export default DatasetTool;

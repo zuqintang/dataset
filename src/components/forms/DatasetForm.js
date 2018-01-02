@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import { Form } from "semantic-ui-react";
 
 const options = [
-  { key: 0, text: "请选择", value: "0" },
-  { key: 1, text: "国标", value: "1" },
-  { key: 2, text: "企标", value: "2" },
-  { key: 3, text: "专用-病种名称", value: "3" },
-  { key: 4, text: "通用-人口信息学", value: "4" }
+  { key: 0, text: "请选择", value: "" },
+  { key: 1, text: "国标", value: "0" },
+  { key: 2, text: "企标", value: "1" },
+  { key: 3, text: "专用-病种名称", value: "2" },
+  { key: 4, text: "通用-人口信息学", value: "3" }
 ];
 
 class DatasetForm extends React.Component {

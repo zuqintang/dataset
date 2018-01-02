@@ -31,6 +31,14 @@ export default {
             activeItem
           })
         )
+        .then(res => res.data),
+    save: param =>
+      axios
+        .post("/Dataset/save", qs.stringify(param), {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+          }
+        })
         .then(res => res.data)
   }
 };

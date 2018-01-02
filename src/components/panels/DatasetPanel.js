@@ -7,7 +7,6 @@ import ElementTable from "../tabels/ElementTable";
 import { searchSetChildren } from "../../actions/dataset";
 import DatagroupForm from "../forms/DatagroupForm";
 import { DATA_GROUP_TYPE, DATA_ELEMENT_TYPE } from "../../types";
-import DatasetTool from "../tools/DatasetTool";
 
 class DatasetPanel extends React.Component {
   state = {
@@ -38,10 +37,6 @@ class DatasetPanel extends React.Component {
       })
     );
 
-  add = () => {};
-  delete = () => {};
-  upload = () => {};
-  download = () => {};
   render() {
     const { data, param } = this.state;
     return (
@@ -63,12 +58,6 @@ class DatasetPanel extends React.Component {
             id={DATA_ELEMENT_TYPE}
             active={param.activeItem === DATA_ELEMENT_TYPE}
             onClick={this.handleItemClick}
-          />
-          <DatasetTool
-            add={this.add}
-            delete={this.delete}
-            upload={this.upload}
-            download={this.download}
           />
           <DatagroupForm
             submit={this.searchSetChildren}

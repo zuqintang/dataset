@@ -23,10 +23,21 @@ class DatasetPage extends React.Component {
     this.props.search(param).then(res => this.setState({ data: res }));
   handleContextRef = contextRef => this.setState({ contextRef });
 
-  add = () => {};
-  delete = () => {};
-  upload = () => {};
-  download = () => {};
+  add = () => {
+    this.props.history.push("/add");
+  };
+  delete = () => {
+    this.props.history.push("/delete");
+  };
+  upload = () => {
+    this.props.history.push("/upload");
+  };
+  download = () => {
+    this.props.history.push("/download");
+  };
+  select = () => {
+    this.props.history.push("/select");
+  };
   render() {
     const { param } = this.state;
     return (
@@ -50,6 +61,7 @@ class DatasetPage extends React.Component {
                 delete={this.delete}
                 upload={this.upload}
                 download={this.download}
+                select={this.select}
               />
             </Segment>
           </Grid.Column>
@@ -66,7 +78,10 @@ class DatasetPage extends React.Component {
   }
 }
 DatasetPage.propTypes = {
-  search: PropTypes.func.isRequired
+  search: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }).isRequired
 };
 
 export default connect(null, { search })(DatasetPage);
