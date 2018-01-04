@@ -19,7 +19,7 @@ class AddDatasetForm extends React.Component {
   };
   onSubmit = () => {
     const errors = this.validate(this.state.data);
-    const time = moment().unix();
+    const time = moment().format("YYYY-MM-DD HH:mm:ss");
     this.setState({ errors });
     if (Object.keys(errors).length === 0) {
       this.setState({ loading: true });

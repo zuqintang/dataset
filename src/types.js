@@ -7,3 +7,5 @@ export const DATA_CONCEPT_TYPE = 3;
 export const DATA_FIELDCODE_TYPE = 4;
 export const DATA_OPTION_TYPE = 5;
 export const API_HOST = "http://127.0.0.1/CAPI";
+export const NATIONAL = 0;
+export const ENTERPRISE = 1;

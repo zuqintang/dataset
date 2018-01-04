@@ -30,7 +30,7 @@ export default {
         .then(res => res.data),
     save: param =>
       axios
-        .post(API_HOST + "/Dataset/save", qs.stringify(param), {
+        .post(API_HOST + "/Dataset/addSet", qs.stringify(param), {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
           }

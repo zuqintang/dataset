@@ -1,6 +1,7 @@
 import React from "react";
 import { List, Table, Label } from "semantic-ui-react";
 import DatasetPanel from "../panels/DatasetPanel";
+import { FormatStandard } from "../tools/Formater";
 
 function SetRows(props) {
   const rows = props.setData;
@@ -21,7 +22,9 @@ function SetRows(props) {
           </Label>
         </Table.Cell>
       )}
-      {activeRow !== row.ID && <Table.Cell>{row.STANDARD}</Table.Cell>}
+      {activeRow !== row.ID && (
+        <Table.Cell>{FormatStandard(row.STANDARD)}</Table.Cell>
+      )}
       {activeRow !== row.ID && <Table.Cell>{row.STUDY_TYPE}</Table.Cell>}
       {activeRow !== row.ID && <Table.Cell>{row.CREATED_AT}</Table.Cell>}
       {activeRow !== row.ID && <Table.Cell>{row.CREATOR}</Table.Cell>}
