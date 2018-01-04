@@ -48,7 +48,7 @@ class DatagroupTable extends React.Component {
                 <Paginator
                   onPageSubmit={this.search}
                   param={param}
-                  sumPage={data.sumPage}
+                  total={data.total}
                 />
               </Table.HeaderCell>
             </Table.Row>
@@ -62,7 +62,7 @@ class DatagroupTable extends React.Component {
 DatagroupTable.propTypes = {
   submit: PropTypes.func.isRequired,
   data: PropTypes.shape({
-    sumPage: PropTypes.number.isRequired,
+    total: PropTypes.number.isRequired,
     rows: PropTypes.array.isRequired
   }).isRequired,
   getParam: PropTypes.func.isRequired

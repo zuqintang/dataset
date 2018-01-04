@@ -9,7 +9,7 @@ class DatagroupForm extends React.Component {
   };
   onSubmit = () => {
     this.setState({ loading: true });
-    const searchParam = this.keywordEncode(this.props.getParam());
+    const searchParam = this.setKeyword(this.props.getParam());
     this.props.setParam(searchParam);
     this.props.submit(searchParam).then(() => {
       this.setState({ loading: false });
@@ -18,9 +18,9 @@ class DatagroupForm extends React.Component {
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
-  keywordEncode = param => {
+  setKeyword = param => {
     const searchParam = param;
-    searchParam.keyword = encodeURIComponent(this.state.keyword);
+    searchParam.keyword = this.state.keyword;
     return searchParam;
   };
 

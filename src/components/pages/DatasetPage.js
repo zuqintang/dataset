@@ -9,9 +9,9 @@ import DatasetTool from "../tools/DatasetTool";
 
 class DatasetPage extends React.Component {
   state = {
-    data: { rows: [], sumPage: 0 },
+    data: { rows: [], total: 0 },
     param: {
-      studyTpId: "",
+      study: "",
       limit: 10,
       offset: 0,
       keyword: "",

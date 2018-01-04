@@ -14,14 +14,10 @@ class DatasetPanel extends React.Component {
       limit: 10,
       offset: 0,
       keyword: "",
-      keyword_need_encode: "",
       datasetID: this.props.datasetID || 0,
       activeItem: DATA_GROUP_TYPE
     },
-    data: {
-      datagroupData: { sumPage: 0, rows: [] },
-      elementData: { sumPage: 0, rows: [] }
-    }
+    data: { group: { total: 0, rows: [] }, element: { total: 0, rows: [] } }
   };
   setParam = param => this.setState({ param });
   getParam = () => {
@@ -29,13 +25,17 @@ class DatasetPanel extends React.Component {
     return param;
   };
   handleItemClick = (e, { id }) =>
-    this.setState({ param: { ...this.state.param, activeItem: id } });
+    this.setState({
+      param: { ...this.state.param, activeItem: id }
+    });
   searchSetChildren = param =>
-    this.props.searchSetChildren(param).then(res =>
-      this.setState({
-        data: { ...this.state.data, [res.activeItem]: res.data }
-      })
-    );
+    this.props.searchSetChildren(param).then(res => {
+      if (param.activeItem === 1) {
+        this.setState({ data: { ...this.state.data, group: res } });
+      } else {
+        this.setState({ data: { ...this.state.data, element: res } });
+      }
+    });
 
   render() {
     const { data, param } = this.state;
@@ -70,14 +70,14 @@ class DatasetPanel extends React.Component {
             <DatagroupTable
               submit={this.searchSetChildren}
               getParam={this.getParam}
-              data={data.datagroupData}
+              data={data.group}
             />
           )}
           {param.activeItem === DATA_ELEMENT_TYPE && (
             <ElementTable
               submit={this.searchSetChildren}
               getParam={this.getParam}
-              data={data.elementData}
+              data={data.element}
             />
           )}
         </Segment>

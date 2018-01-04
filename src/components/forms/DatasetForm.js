@@ -12,26 +12,20 @@ const options = [
 
 class DatasetForm extends React.Component {
   state = {
-    data: { studyTpId: "", keyword_need_encode: "", limit: 10, offset: 0 },
+    data: { study: "", keyword: "", limit: 10, offset: 0 },
     loading: false
   };
   onSubmit = () => {
     this.setState({ loading: true });
-    const searchParam = this.keywordEncode(this.state.data);
+    const searchParam = this.state.data;
     this.props.setParam(searchParam);
     this.props
       .submit(searchParam)
       .then(() => this.setState({ loading: false }));
   };
 
-  keywordEncode = data => {
-    const searchParam = data;
-    searchParam.keyword = encodeURIComponent(data.keyword_need_encode);
-    return searchParam;
-  };
-
   handleChange = (e, { value }) =>
-    this.setState({ data: { ...this.state.data, studyTpId: value } });
+    this.setState({ data: { ...this.state.data, study: value } });
   handleInputChange = e =>
     this.setState({
       data: { ...this.state.data, [e.target.name]: e.target.value }
@@ -44,31 +38,31 @@ class DatasetForm extends React.Component {
           <Form.Radio
             label="全部"
             value="all"
-            checked={data.studyTpId === "all"}
+            checked={data.study === "all"}
             onChange={this.handleChange}
           />
           <Form.Radio
             label="通用型"
             value="common"
-            checked={data.studyTpId === "common"}
+            checked={data.study === "common"}
             onChange={this.handleChange}
           />
           <Form.Radio
             label="专用型"
             value="special"
-            checked={data.studyTpId === "special"}
+            checked={data.study === "special"}
             onChange={this.handleChange}
           />
           <Form.Select
             options={options}
             placeholder="请选择"
-            value={data.studyTpId}
+            value={data.study}
             onChange={this.handleChange}
           />
           <Form.Input
-            name="keyword_need_encode"
+            name="keyword"
             placeholder="搜索..."
-            value={data.keyword_need_encode}
+            value={data.keyword}
             onChange={this.handleInputChange}
           />
           <Form.Button size="mini">检索</Form.Button>

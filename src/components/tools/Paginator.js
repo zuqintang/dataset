@@ -27,7 +27,7 @@ class Paginator extends React.Component {
     }
   };
   onSufClick = () => {
-    if (this.state.current < this.props.sumPage) {
+    if (this.state.current < this.props.total) {
       this.setState({
         current: this.state.current + 1,
         activeItem: this.state.current + 1
@@ -39,7 +39,7 @@ class Paginator extends React.Component {
     }
   };
   render() {
-    const { sumPage } = this.props;
+    const { total } = this.props;
     const { current, activeItem } = this.state;
     return (
       <Menu floated="right" pagination>
@@ -50,8 +50,8 @@ class Paginator extends React.Component {
           1
         </Menu.Item>
 
-        {sumPage >= 8 && current > 4 && <Menu.Item>...</Menu.Item>}
-        {((sumPage >= 2 && sumPage < 8) || (sumPage >= 8 && current <= 4)) && (
+        {total >= 8 && current > 4 && <Menu.Item>...</Menu.Item>}
+        {((total >= 2 && total < 8) || (total >= 8 && current <= 4)) && (
           <Menu.Item
             as="a"
             icon
@@ -62,20 +62,20 @@ class Paginator extends React.Component {
           </Menu.Item>
         )}
 
-        {sumPage >= 8 &&
-          current >= sumPage - 3 && (
+        {total >= 8 &&
+          current >= total - 3 && (
             <Menu.Item
               as="a"
               icon
               onClick={this.onClick}
-              active={activeItem === sumPage - 4}
+              active={activeItem === total - 4}
             >
-              {sumPage - 4}
+              {total - 4}
             </Menu.Item>
           )}
-        {sumPage >= 8 &&
+        {total >= 8 &&
           current > 4 &&
-          current < sumPage - 3 && (
+          current < total - 3 && (
             <Menu.Item
               as="a"
               icon
@@ -86,7 +86,7 @@ class Paginator extends React.Component {
             </Menu.Item>
           )}
 
-        {((sumPage >= 3 && sumPage < 8) || (sumPage >= 8 && current <= 4)) && (
+        {((total >= 3 && total < 8) || (total >= 8 && current <= 4)) && (
           <Menu.Item
             as="a"
             icon
@@ -97,20 +97,20 @@ class Paginator extends React.Component {
           </Menu.Item>
         )}
 
-        {sumPage >= 8 &&
-          current > sumPage - 3 && (
+        {total >= 8 &&
+          current > total - 3 && (
             <Menu.Item
               as="a"
               icon
               onClick={this.onClick}
-              active={activeItem === sumPage - 3}
+              active={activeItem === total - 3}
             >
-              {sumPage - 3}
+              {total - 3}
             </Menu.Item>
           )}
-        {sumPage >= 8 &&
+        {total >= 8 &&
           current > 4 &&
-          current <= sumPage - 3 && (
+          current <= total - 3 && (
             <Menu.Item
               as="a"
               icon
@@ -120,7 +120,7 @@ class Paginator extends React.Component {
               {current}
             </Menu.Item>
           )}
-        {((sumPage >= 4 && sumPage < 8) || (sumPage >= 8 && current <= 4)) && (
+        {((total >= 4 && total < 8) || (total >= 8 && current <= 4)) && (
           <Menu.Item
             as="a"
             icon
@@ -131,20 +131,20 @@ class Paginator extends React.Component {
           </Menu.Item>
         )}
 
-        {current > sumPage - 3 &&
-          sumPage >= 8 && (
+        {current > total - 3 &&
+          total >= 8 && (
             <Menu.Item
               as="a"
               icon
               onClick={this.onClick}
-              active={activeItem === sumPage - 2}
+              active={activeItem === total - 2}
             >
-              {sumPage - 2}
+              {total - 2}
             </Menu.Item>
           )}
         {current > 4 &&
-          current <= sumPage - 3 &&
-          sumPage >= 8 && (
+          current <= total - 3 &&
+          total >= 8 && (
             <Menu.Item
               as="a"
               icon
@@ -154,7 +154,7 @@ class Paginator extends React.Component {
               {current + 1}
             </Menu.Item>
           )}
-        {((sumPage >= 5 && sumPage < 8) || (sumPage >= 8 && current <= 4)) && (
+        {((total >= 5 && total < 8) || (total >= 8 && current <= 4)) && (
           <Menu.Item
             as="a"
             icon
@@ -165,22 +165,22 @@ class Paginator extends React.Component {
           </Menu.Item>
         )}
 
-        {current > sumPage - 3 &&
-          sumPage >= 8 && (
+        {current > total - 3 &&
+          total >= 8 && (
             <Menu.Item
               as="a"
               icon
               onClick={this.onClick}
-              active={activeItem === sumPage - 1}
+              active={activeItem === total - 1}
             >
-              {sumPage - 1}
+              {total - 1}
             </Menu.Item>
           )}
-        {sumPage >= 8 &&
-          current <= sumPage - 3 &&
-          sumPage >= 8 && <Menu.Item>...</Menu.Item>}
-        {sumPage >= 6 &&
-          sumPage < 8 && (
+        {total >= 8 &&
+          current <= total - 3 &&
+          total >= 8 && <Menu.Item>...</Menu.Item>}
+        {total >= 6 &&
+          total < 8 && (
             <Menu.Item
               as="a"
               icon
@@ -191,14 +191,14 @@ class Paginator extends React.Component {
             </Menu.Item>
           )}
 
-        {sumPage >= 7 && (
+        {total >= 7 && (
           <Menu.Item
             as="a"
             icon
             onClick={this.onClick}
-            active={activeItem === sumPage}
+            active={activeItem === total}
           >
-            {sumPage}
+            {total}
           </Menu.Item>
         )}
         <Menu.Item as="a" icon onClick={this.onSufClick}>
@@ -212,7 +212,7 @@ class Paginator extends React.Component {
 Paginator.propTypes = {
   param: PropTypes.shape({}).isRequired,
   onPageSubmit: PropTypes.func.isRequired,
-  sumPage: PropTypes.number.isRequired
+  total: PropTypes.number.isRequired
 };
 
 export default Paginator;

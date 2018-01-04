@@ -48,7 +48,7 @@ class DatasetTable extends React.Component {
                 <Paginator
                   onPageSubmit={this.search}
                   param={param}
-                  sumPage={data.sumPage}
+                  total={data.total}
                 />
               </Table.HeaderCell>
             </Table.Row>
@@ -62,12 +62,12 @@ class DatasetTable extends React.Component {
 DatasetTable.propTypes = {
   submit: PropTypes.func.isRequired,
   data: PropTypes.shape({
-    sumPage: PropTypes.number.isRequired,
+    total: PropTypes.number.isRequired,
     rows: PropTypes.array.isRequired
   }).isRequired,
   param: PropTypes.shape({
-    studyTpId: PropTypes.string.isRequired,
-    keyword_need_encode: PropTypes.string.isRequired,
+    study: PropTypes.string.isRequired,
+    keyword: PropTypes.string.isRequired,
     limit: PropTypes.number.isRequired,
     offset: PropTypes.number.isRequired
   }).isRequired
