@@ -9,3 +9,5 @@ export const DATA_OPTION_TYPE = 5;
 export const API_HOST = "http://127.0.0.1/CAPI";
 export const NATIONAL = 0;
 export const ENTERPRISE = 1;
+export const SPECIAL = 0;
+export const COMMON = 1;

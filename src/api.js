@@ -8,17 +8,9 @@ export default {
       axios.post("/api/auth", { credentials }).then(res => res.data.user)
   },
   dataset: {
-    search: ({ study, limit, keyword, offset }) =>
+    search: param =>
       axios
-        .post(
-          API_HOST + "/Dataset/search",
-          qs.stringify({
-            study,
-            limit,
-            keyword,
-            offset
-          })
-        )
+        .post(API_HOST + "/Dataset/search", qs.stringify(param))
         .then(res => res.data),
     searchSetChildren: param =>
       axios
@@ -31,6 +23,14 @@ export default {
     save: param =>
       axios
         .post(API_HOST + "/Dataset/addSet", qs.stringify(param), {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+          }
+        })
+        .then(res => res.data),
+    searchSetInfo: param =>
+      axios
+        .post(API_HOST + "/Dataset/searchSetInfo", qs.stringify(param), {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
           }

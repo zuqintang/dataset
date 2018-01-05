@@ -1,11 +1,12 @@
 import React from "react";
 import { List, Table, Label } from "semantic-ui-react";
 import DatasetPanel from "../panels/DatasetPanel";
-import { FormatStandard } from "../tools/Formater";
+import { FormatStandard, FormatStudy } from "../tools/Formater";
 
 function SetRows(props) {
   const rows = props.setData;
   const activeRow = props.activeRow;
+  const getActiveRow = props.getActiveRow;
   const SetRowsList = rows.map(row => (
     <Table.Row key={row.ID}>
       {activeRow !== row.ID && (
@@ -25,7 +26,9 @@ function SetRows(props) {
       {activeRow !== row.ID && (
         <Table.Cell>{FormatStandard(row.STANDARD)}</Table.Cell>
       )}
-      {activeRow !== row.ID && <Table.Cell>{row.STUDY_TYPE}</Table.Cell>}
+      {activeRow !== row.ID && (
+        <Table.Cell>{FormatStudy(row.STUDY_TYPE)}</Table.Cell>
+      )}
       {activeRow !== row.ID && <Table.Cell>{row.CREATED_AT}</Table.Cell>}
       {activeRow !== row.ID && <Table.Cell>{row.CREATOR}</Table.Cell>}
       {activeRow === row.ID && (
@@ -50,13 +53,13 @@ function SetRows(props) {
               <Label color="blue" horizontal>
                 来源
               </Label>
-              {row.STANDARD}
+              {FormatStandard(row.STANDARD)}
             </List.Item>
             <List.Item>
               <Label color="blue" horizontal>
                 所属学科
               </Label>
-              {row.STUDY_TYPE}
+              {FormatStudy(row.STUDY_TYPE)}
             </List.Item>
             <List.Item>
               <Label color="blue" horizontal>
@@ -75,7 +78,7 @@ function SetRows(props) {
       )}
       {activeRow === row.ID && (
         <Table.Cell colSpan={5}>
-          <DatasetPanel datasetID={row.ID} />
+          <DatasetPanel getActiveRow={getActiveRow} />
         </Table.Cell>
       )}
     </Table.Row>

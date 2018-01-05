@@ -1,25 +1,58 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Menu, Button } from "semantic-ui-react";
+import { Menu } from "semantic-ui-react";
+import SetModal from "../modals/SetModal";
 
-const DatasetTool = props => (
-  <Menu.Menu position="right">
-    <Menu.Item>
-      <Button basic circular icon="add circle" onClick={props.add} />
-      <Button basic circular icon="trash outline" onClick={props.delete} />
-      <Button basic circular icon="upload" onClick={props.upload} />
-      <Button basic circular icon="download" onClick={props.download} />
-      <Button basic circular icon="compress" onClick={props.select} />
-    </Menu.Item>
-  </Menu.Menu>
-);
+class DatasetTool extends React.Component {
+  state = {};
+  render() {
+    const { getActiveRow } = this.props;
+    return (
+      <Menu.Menu position="right">
+        <Menu.Item>
+          <SetModal
+            getActiveRow={getActiveRow}
+            title={"添加新的数据集"}
+            icon={"add circle"}
+            size={"tiny"}
+            component={"add"}
+          />
+          <SetModal
+            getActiveRow={getActiveRow}
+            title={"删除数据集"}
+            icon={"trash outline"}
+            size={"fullscreen"}
+            component={"delete"}
+          />
+          <SetModal
+            getActiveRow={getActiveRow}
+            title={"修改数据集"}
+            icon={"edit"}
+            size={"fullscreen"}
+            component={"edit"}
+          />
+          <SetModal
+            getActiveRow={getActiveRow}
+            title={"导入"}
+            icon={"download"}
+            size={"fullscreen"}
+            component={"import"}
+          />
+          <SetModal
+            getActiveRow={getActiveRow}
+            title={"导出"}
+            icon={"upload"}
+            size={"fullscreen"}
+            component={"export"}
+          />
+        </Menu.Item>
+      </Menu.Menu>
+    );
+  }
+}
 
 DatasetTool.propTypes = {
-  add: PropTypes.func.isRequired,
-  delete: PropTypes.func.isRequired,
-  upload: PropTypes.func.isRequired,
-  download: PropTypes.func.isRequired,
-  select: PropTypes.func.isRequired
+  getActiveRow: PropTypes.func.isRequired
 };
 
 export default DatasetTool;

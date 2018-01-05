@@ -14,7 +14,7 @@ class DatasetPanel extends React.Component {
       limit: 10,
       offset: 0,
       keyword: "",
-      datasetID: this.props.datasetID || 0,
+      datasetID: this.props.getActiveRow() || 0,
       activeItem: DATA_GROUP_TYPE
     },
     data: { group: { total: 0, rows: [] }, element: { total: 0, rows: [] } }
@@ -88,7 +88,7 @@ class DatasetPanel extends React.Component {
 
 DatasetPanel.propTypes = {
   searchSetChildren: PropTypes.func.isRequired,
-  datasetID: PropTypes.number.isRequired
+  getActiveRow: PropTypes.func.isRequired
 };
 
 export default connect(null, { searchSetChildren })(DatasetPanel);

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import moment from "moment";
 import { Form, Button } from "semantic-ui-react";
 import InlineError from "../messages/InlineError";
-import { DATA_SET_TYPE } from "../../types";
+import { DATA_SET_TYPE, NATIONAL, ENTERPRISE } from "../../types";
 
 class AddDatasetForm extends React.Component {
   state = {
@@ -32,7 +32,6 @@ class AddDatasetForm extends React.Component {
       });
     }
   };
-
   onChange = e => {
     this.setState({
       data: { ...this.state.data, [e.target.name]: e.target.value }
@@ -47,6 +46,7 @@ class AddDatasetForm extends React.Component {
   };
   render() {
     const { data, loading, errors } = this.state;
+    const { close } = this.props;
     return (
       <Form onSubmit={this.onSubmit} loading={loading}>
         <Form.Field error={!!errors.STANDARD}>
@@ -58,8 +58,8 @@ class AddDatasetForm extends React.Component {
             onChange={this.onChange}
           >
             <option value="">请选择</option>
-            <option value="0">企标</option>
-            <option value="1">国标</option>
+            <option value={NATIONAL}>国标</option>
+            <option value={ENTERPRISE}>企标</option>
           </select>
           {errors.STANDARD && <InlineError text={errors.STANDARD} />}
         </Form.Field>
@@ -101,9 +101,7 @@ class AddDatasetForm extends React.Component {
           {errors.STUDY_TYPE && <InlineError text={errors.STUDY_TYPE} />}
         </Form.Field>
         <Button.Group>
-          <Button as="a" href="/dataset">
-            取消
-          </Button>
+          <Button onClick={close}>取消</Button>
           <Button.Or />
           <Button positive>保存</Button>
         </Button.Group>
@@ -111,9 +109,8 @@ class AddDatasetForm extends React.Component {
     );
   }
 }
-
 AddDatasetForm.propTypes = {
-  submit: PropTypes.func.isRequired
+  submit: PropTypes.func.isRequired,
+  close: PropTypes.func.isRequired
 };
-
 export default AddDatasetForm;

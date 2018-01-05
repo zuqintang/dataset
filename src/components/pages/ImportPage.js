@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Segment, Label, Grid, Form } from "semantic-ui-react";
+import { Segment, Label, Grid, Button, Form } from "semantic-ui-react";
 import DatasetPanel from "../panels/DatasetPanel";
 import SetInfo from "../infos/SetInfo";
 
-class DeletePage extends React.Component {
+class ImportPage extends React.Component {
   state = {
     data: { rows: [], sumPage: 0 },
     param: {
@@ -27,11 +27,12 @@ class DeletePage extends React.Component {
               操作
             </Label>
             <Form style={{ marginTop: "10px" }}>
-              <Form.Group>
-                <Form.Button color="brown">取关数据元</Form.Button>
-                <Form.Button color="brown">取关数据集</Form.Button>
-              </Form.Group>
-              <Form.Button color="brown">删除数据集</Form.Button>
+              <Form>
+                <Form.Input type="file" />
+                <Button primary>预览</Button>
+                <Button primary>导入</Button>
+                <Button>模版下载</Button>
+              </Form>
             </Form>
           </Segment>
         </Grid.Column>
@@ -42,9 +43,9 @@ class DeletePage extends React.Component {
     );
   }
 }
-DeletePage.propTypes = {
+ImportPage.propTypes = {
   data: PropTypes.shape({}).isRequired,
   getActiveRow: PropTypes.func.isRequired
 };
 
-export default DeletePage;
+export default ImportPage;

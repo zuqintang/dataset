@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Segment, Label, Grid, List, Button, Form } from "semantic-ui-react";
+import { Segment, Label, Grid, Button, Form } from "semantic-ui-react";
 import DatasetPanel from "../panels/DatasetPanel";
+import SetInfo from "../infos/SetInfo";
 
 const options = [
   { key: 0, text: "请选择", value: "" },
@@ -11,50 +12,24 @@ const options = [
   { key: 4, text: "检验报告单编号", value: "3" }
 ];
 
-class DatasetPage extends React.Component {
+class EditPage extends React.Component {
   state = {
     data: { rows: [], sumPage: 0 },
     param: {
       studyTpId: "",
       limit: 10,
       offset: 0,
-      keyword: "",
-      keyword_need_encode: ""
+      keyword: ""
     }
   };
   setParam = param => this.setState({ param });
-  submit = param =>
-    this.props.search(param).then(res => this.setState({ data: res }));
   handleContextRef = contextRef => this.setState({ contextRef });
   render() {
+    const { data, getActiveRow } = this.props;
     return (
       <Grid>
         <Grid.Column width={5}>
-          <Segment raised>
-            <Label as="a" color="teal" ribbon>
-              数据集信息
-            </Label>
-            <List divided selection>
-              <List.Item>
-                <Label color="blue" horizontal>
-                  编码
-                </Label>
-                706
-              </List.Item>
-              <List.Item>
-                <Label color="blue" horizontal>
-                  来源
-                </Label>
-                企标
-              </List.Item>
-              <List.Item>
-                <Label color="blue" horizontal>
-                  所属学科
-                </Label>
-                通用
-              </List.Item>
-            </List>
-          </Segment>
+          <SetInfo data={data} />
           <Segment raised>
             <Label as="a" color="teal" ribbon>
               操作
@@ -73,14 +48,15 @@ class DatasetPage extends React.Component {
           </Segment>
         </Grid.Column>
         <Grid.Column width={11}>
-          <DatasetPanel datasetID={706} />
+          <DatasetPanel getActiveRow={getActiveRow} />
         </Grid.Column>
       </Grid>
     );
   }
 }
-DatasetPage.propTypes = {
-  search: PropTypes.func.isRequired
+EditPage.propTypes = {
+  data: PropTypes.shape({}).isRequired,
+  getActiveRow: PropTypes.func.isRequired
 };
 
-export default DatasetPage;
+export default EditPage;

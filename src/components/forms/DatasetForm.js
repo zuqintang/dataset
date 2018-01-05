@@ -1,18 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Form } from "semantic-ui-react";
+import { NATIONAL, ENTERPRISE, SPECIAL, COMMON } from "../../types";
 
-const options = [
-  { key: 0, text: "请选择", value: "" },
-  { key: 1, text: "国标", value: "0" },
-  { key: 2, text: "企标", value: "1" },
-  { key: 3, text: "专用-病种名称", value: "2" },
-  { key: 4, text: "通用-人口信息学", value: "3" }
+const standardOptions = [
+  { key: 0, text: "请选择", value: -1 },
+  { key: 1, text: "国标", value: NATIONAL },
+  { key: 2, text: "企标", value: ENTERPRISE }
+];
+
+const studyOptions = [
+  { key: 0, text: "请选择", value: -1 },
+  { key: 1, text: "专用-病种名称", value: SPECIAL },
+  { key: 2, text: "通用-人口信息学", value: COMMON }
 ];
 
 class DatasetForm extends React.Component {
   state = {
-    data: { study: "", keyword: "", limit: 10, offset: 0 },
+    data: { standard: -1, study: -1, keyword: "", limit: 10, offset: 0 },
     loading: false
   };
   onSubmit = () => {
@@ -24,8 +29,10 @@ class DatasetForm extends React.Component {
       .then(() => this.setState({ loading: false }));
   };
 
-  handleChange = (e, { value }) =>
+  handleStudyChange = (e, { value }) =>
     this.setState({ data: { ...this.state.data, study: value } });
+  handleStandardChange = (e, { value }) =>
+    this.setState({ data: { ...this.state.data, standard: value } });
   handleInputChange = e =>
     this.setState({
       data: { ...this.state.data, [e.target.name]: e.target.value }
@@ -54,10 +61,16 @@ class DatasetForm extends React.Component {
             onChange={this.handleChange}
           />
           <Form.Select
-            options={options}
-            placeholder="请选择"
+            options={standardOptions}
+            placeholder="标准类型"
+            value={data.standard}
+            onChange={this.handleStandardChange}
+          />
+          <Form.Select
+            options={studyOptions}
+            placeholder="学科类型"
             value={data.study}
-            onChange={this.handleChange}
+            onChange={this.handleStudyChange}
           />
           <Form.Input
             name="keyword"

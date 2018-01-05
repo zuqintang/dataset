@@ -6,6 +6,10 @@ import GroupRows from "../rows/GroupRows";
 
 class DatagroupTable extends React.Component {
   state = { activeRow: 0, data: { rows: [] }, active: false };
+  getActiveRow = () => {
+    const activeRowID = this.state.activeRow;
+    return activeRowID;
+  };
   search = searchParam => {
     this.setState({ active: true });
     this.props.submit(searchParam).then(() => this.setState({ active: false }));
@@ -40,6 +44,7 @@ class DatagroupTable extends React.Component {
               data={data.rows}
               activeRow={activeRow}
               handleRowClick={this.handleRowClick}
+              getActiveRow={this.getActiveRow}
             />
           </Table.Body>
           <Table.Footer>
